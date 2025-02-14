@@ -1,34 +1,60 @@
+import { ShoppingCartOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 function ProductList() {
-    const { category } = useParams();
-    const [products, setProducts] = useState([]);
+    const { slug } = useParams();
+    const [products, setProducts] = useState();
 
     useEffect(() => {
-        let categoryFilter = category ? `&category_all=${category}` : "";
         axios
             .get(
-                `https://gw.texnomart.uz/api/common/v1/search/filters?sort=-order_count&page=1${categoryFilter}`
+                `https://gw.texnomart.uz/api/common/v1/search/filters?sort=-order_count&page=1&category_all=${slug}`
             )
             .then((res) => {
-                setProducts(res.data.products);
+                setProducts(res.data.data.products);
             });
-    }, [category]);
+    }, [slug]);
+
+    if (!products) {
+        return <div>Loading ...</div>;
+    }
 
     return (
-        <div>
-            <h2>Mahsulotlar ro‘yxati: {category ? category : "Barcha kategoriyalar"}</h2>
-            <div className="grid grid-cols-4 gap-4">
-                {products.map((product) => (
-                    <div key={product.id} className="border p-4">
-                        <img src={product.image} alt={product.name} className="w-full h-40 object-cover" />
-                        <h3>{product.name}</h3>
-                        <p>{product.sale_price} so‘m</p>
+        <div className="grid grid-cols-4 gap-4 container mx-auto">
+            {products.map((product, i) => (
+                <div
+                    key={i}
+                    className="rounded-[20px] box w-[284px] h-[456px] flex flex-col justify-between"
+                >
+                    <div>
+                        <img
+                            className="object-center p-5"
+                            src={product.image}
+                            alt={product.name}
+                        />
+                        <h3 className="text-[16px] mt-4 mb-4">
+                            {product.name}
+                        </h3>
                     </div>
-                ))}
-            </div>
+                    <div>
+                        <span className="bg-[#f4f4f4] p-1 rounded-2xl text-[13px]">
+                            {product.axiom_monthly_price}
+                        </span>
+                        <div className="flex justify-between items-center mt-1">
+                            <p>
+                                {product.sale_price} <span>so'm</span>
+                            </p>
+                            <Button
+                                icon={<ShoppingCartOutlined />}
+                                onClick={() => addToCart(product)}
+                            />
+                        </div>
+                    </div>
+                </div>
+            ))}
         </div>
     );
 }
