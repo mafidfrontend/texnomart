@@ -21,11 +21,11 @@ function Products({ addToCart }) {
                 <Link
                     to={`/product/${product.id}`}
                     key={i}
-                    className="rounded-[20px] w-[284px] h-[456px] flex flex-col justify-between"
+                    className="rounded-[20px] w-[284px] h-[456px] box flex flex-col justify-between"
                 >
                     <div
                         key={i}
-                        className="rounded-[20px] box w-[284px] h-[456px] flex flex-col justify-between"
+                        className="rounded-[20px]  w-[284px] h-[456px] flex flex-col justify-between"
                     >
                         <div>
                             <img
