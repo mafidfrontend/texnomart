@@ -2,7 +2,7 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 function ProductList() {
     const { slug } = useParams();
@@ -25,13 +25,14 @@ function ProductList() {
     return (
         <div className="grid grid-cols-4 gap-4 container mx-auto">
             {products.map((product, i) => (
-                <div
+                <Link
+                    to={`/product/${product.id}`} 
                     key={i}
                     className="rounded-[20px] box w-[284px] h-[456px] flex flex-col justify-between"
                 >
                     <div>
                         <img
-                            className="object-center p-5"
+                            className="object-center p-5 h-[278px] bg-gray-200 rounded-lg"
                             src={product.image}
                             alt={product.name}
                         />
@@ -49,11 +50,13 @@ function ProductList() {
                             </p>
                             <Button
                                 icon={<ShoppingCartOutlined />}
-                                onClick={() => addToCart(product)}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                }}
                             />
                         </div>
                     </div>
-                </div>
+                </Link>
             ))}
         </div>
     );
