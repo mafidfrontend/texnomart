@@ -36,9 +36,6 @@ function ProductDetail() {
                 <Card className="p-6">
                     <h1 className="text-2xl font-bold">{product.name}</h1>
                     <p className="text-gray-500">
-                        Hajmi: <span className="font-semibold">1.7L</span>
-                    </p>
-                    <p className="text-gray-500">
                         Max Yuk:{" "}
                         <span className="font-semibold">
                             {product.main_characters
