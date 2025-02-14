@@ -1,6 +1,6 @@
 import React from "react";
 
-function Header() {
+function HeaderHero() {
     return (
         <div className="bg-[#333] text-white py-2">
             <div className="flex justify-between container">
@@ -87,4 +87,4 @@ function Header() {
     );
 }
 
-export default Header;
+export default HeaderHero;

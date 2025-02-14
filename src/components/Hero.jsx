@@ -1,40 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import useMyStore from "./store";
 
 function Hero() {
+    const { products, setProducts, loading, setLoading } = useMyStore(); 
+
+    useEffect(() => {
+        setLoading(true);
+        axios
+            .get("https://gw.texnomart.uz/api/web/v1/header/top-categories")
+            .then((res) => {
+                setProducts(res.data.data.data);
+                setLoading(false);
+            })
+            .catch(() => setLoading(false));
+    }, []);
+
+    if (loading) {
+        return <div>Loading ...</div>;
+    }
+
     return (
         <div>
-            <ul className="flex justify-between">
-                <li>
-                    <a href="#">Aksiyalar</a>
-                </li>
-                <li>
-                    <a href="#">1+1</a>
-                </li>
-                <li>
-                    <a href="#">Havo sovutgichlar</a>
-                </li>
-                <li>
-                    <a href="#">Isitgichlar</a>
-                </li>
-                <li>
-                    <a href="#">Smartfonlar</a>
-                </li>
-                <li>
-                    <a href="#">Muzlatgichlar</a>
-                </li>
-                <li>
-                    <a href="#">Changyutgichlar</a>
-                </li>
-                <li>
-                    <a href="#">Noutbuklar</a>
-                </li>
-                <li>
-                    <a href="#">Televizorlar</a>
-                </li>
-                <li>
-                    <a href="#">Barcha kategoriyalar</a>
-                </li>
-            </ul>
+            <div className="flex items-center p-4 justify-between container m-auto">
+                {products.map((item, index) => (
+                    <Link to={`/categories/${item.slug}`} key={index}>
+                        <div>
+                            <p>{item.title}</p>
+                        </div>
+                    </Link>
+                ))}
+            </div>
         </div>
     );
 }

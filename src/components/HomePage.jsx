@@ -1,41 +1,12 @@
-import React, { useState } from "react";
-import Navbar from "./Navbar";
+import React from "react";
 import "./main.scss";
 import Products from "./Products";
+import useStore from "./store";
 
 function HomePage() {
-    const [cart, setCart] = useState([]);
+    const addToCart = useStore((state) => state.addToCart);
 
-    const addToCart = (product) => {
-        setCart((prevCart) => {
-            const existingItem = prevCart.find((item) => item.id === product.id);
-
-            if (existingItem) {
-                return prevCart.map((item) =>
-                    item.id === product.id ? { ...item, count: item.count + 1 } : item
-                );
-            } else {
-                return [...prevCart, { ...product, count: 1 }];
-            }
-        });
-    };
-
-    const updateCartItem = (id, amount) => {
-        setCart((prevCart) =>
-            prevCart
-                .map((item) =>
-                    item.id === id ? { ...item, count: Math.max(0, item.count + amount) } : item
-                )
-                .filter((item) => item.count > 0) 
-        );
-    };
-
-    return (
-        <>
-            <Navbar cart={cart} updateCartItem={updateCartItem} />
-            <Products addToCart={addToCart} />
-        </>
-    );
+    return <Products addToCart={addToCart} />;
 }
 
 export default HomePage;
