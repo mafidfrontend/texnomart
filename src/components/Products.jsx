@@ -13,13 +13,15 @@ function Products({ addToCart }) {
 
     if (loading) return <div>Loading...</div>;
 
+    console.log(products)
+
     return (
         <div className="grid grid-cols-4 w-full container pt-10">
             {products.map((product, i) => (
                 <Link
                     to={`/product/${product.id}`}
                     key={i}
-                    className="rounded-[20px] box w-[284px] h-[456px] flex flex-col justify-between"
+                    className="rounded-[20px] w-[284px] h-[456px] flex flex-col justify-between"
                 >
                     <div
                         key={i}
