@@ -23,6 +23,7 @@ function ProductList() {
     }
 
     console.log(products);
+    console.log(slug)
 
     return (
         <div className="container mx-auto flex">
