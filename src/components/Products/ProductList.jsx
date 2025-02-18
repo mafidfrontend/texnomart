@@ -1,4 +1,4 @@
-import { ShoppingCartOutlined } from "@ant-design/icons";
+import { CaretDownOutlined, CaretUpOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Collapse } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -23,7 +23,7 @@ function ProductList() {
     }
 
     console.log(products);
-    console.log(slug)
+    console.log(slug);
 
     return (
         <div className="container mx-auto flex">
@@ -36,22 +36,12 @@ function ProductList() {
                         label: (
                             <span>
                                 <span className="font-bold">{item.name}</span>
-                                <span className="text-gray-500 ml-2">{item.count}</span>
+                                <span className="text-gray-500 ml-2">
+                                    {item.count}
+                                </span>
                             </span>
                         ),
-                        children: (
-                            <div>
-                                {item.values.map((value) => {
-                                    return (
-                                        <div>
-                                            <Checkbox>
-                                                {value.value} {value.count}
-                                            </Checkbox>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        ),
+                        children: <SiderFilterValue values={item.values} />,
                     };
                 })}
             />
@@ -91,6 +81,49 @@ function ProductList() {
                     </Link>
                 ))}
             </div>
+        </div>
+    );
+}
+
+function SiderFilterValue({ values }) {
+    const [expended, setExpended] = useState(false);
+    return (
+        <div>
+            {values.length > 10 && expended === false ? (
+                <div>
+                    {values.slice(0, 10).map((value) => {
+                        return (
+                            <div key={value.id}>
+                                <Checkbox>
+                                    {value.value} {value.count}
+                                </Checkbox>
+                            </div>
+                        );
+                    })}
+                </div>
+            ) : (
+                values.map((value) => {
+                    return (
+                        <div key={value.id}>
+                            <Checkbox>
+                                {value.value} {value.count}
+                            </Checkbox>
+                        </div>
+                    );
+                })
+            )}
+            {values.length > 10 ? (
+                <Button
+                    onClick={() => {
+                        setExpended(!expended);
+                    }}
+                    icon={expended ? <CaretUpOutlined /> : <CaretDownOutlined />}
+                >
+                    {expended ? "Yopish" : "Ko'proq ko'rsatish"}
+                </Button>
+            ) : (
+                ""
+            )}
         </div>
     );
 }
