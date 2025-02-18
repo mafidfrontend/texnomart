@@ -4,6 +4,7 @@ import useStore from "./store.js";
 
 function ModalSavatcha({ setIsModalOpen, isModalOpen }) {
     const { cart, updateCartItem } = useStore();
+    const totalPrice = cart.reduce((sum, item) => sum + item.sale_price * item.count, 0);
     return (
         <Modal
             title="Savatcha"

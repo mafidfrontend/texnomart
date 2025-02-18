@@ -4,14 +4,22 @@ import axios from "axios";
 const useStore = create((set) => ({
     cart: [],
     products: [],
+    productsNew: [],
     productTitle: [],
     loading: true,
 
-    fetchProducts: async () => {
+    fetchProductsXit: async () => {
         const res = await axios.get(
             "https://gw.texnomart.uz/api/web/v1/home/special-products?type=hit_products"
         );
         set({ products: res.data.data.data, loading: false });
+    },
+
+    fetchProductsNew: async () => {
+        const res = await axios.get(
+            "https://gw.texnomart.uz/api/web/v1/home/special-products?type=new_products"
+        );
+        set({ productsNew: res.data.data.data, loading: false });
     },
 
     addToCart: (product) =>

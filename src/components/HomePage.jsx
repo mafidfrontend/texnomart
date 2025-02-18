@@ -1,12 +1,13 @@
 import React from "react";
 import "./main.scss";
-import Products from "./Products";
-import useStore from "./store";
+import ProductsXit from "./Products/ProductsXit";
+import ProductsNew from "./Products/ProductsNew";
 
 function HomePage() {
-    const addToCart = useStore((state) => state.addToCart);
-
-    return <Products addToCart={addToCart} />;
+    return <>
+        <ProductsXit />
+        <ProductsNew />
+    </>;
 }
 
 export default HomePage;

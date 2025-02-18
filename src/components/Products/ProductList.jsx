@@ -1,0 +1,97 @@
+import { ShoppingCartOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Collapse } from "antd";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+
+function ProductList() {
+    const { slug } = useParams();
+    const [products, setProducts] = useState();
+
+    useEffect(() => {
+        axios
+            .get(
+                `https://gw.texnomart.uz/api/common/v1/search/filters?sort=-order_count&page=1&category_all=${slug}`
+            )
+            .then((res) => {
+                setProducts(res.data.data);
+            });
+    }, [slug]);
+
+    if (!products) {
+        return <div>Loading ...</div>;
+    }
+
+    console.log(products);
+
+    return (
+        <div className="container mx-auto flex">
+            <Collapse
+                bordered={false}
+                defaultActiveKey={["1"]}
+                items={products.filter.map((item) => {
+                    return {
+                        key: item.id,
+                        label: (
+                            <span>
+                                <span className="font-bold">{item.name}</span>
+                                <span className="text-gray-500 ml-2">{item.count}</span>
+                            </span>
+                        ),
+                        children: (
+                            <div>
+                                {item.values.map((value) => {
+                                    return (
+                                        <div>
+                                            <Checkbox>
+                                                {value.value} {value.count}
+                                            </Checkbox>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        ),
+                    };
+                })}
+            />
+            <div className="grid grid-cols-4 gap-4 container mx-auto">
+                {products.products.map((product, i) => (
+                    <Link
+                        to={`/product/${product.id}`}
+                        key={i}
+                        className="rounded-[20px] box w-[284px] h-[456px] flex flex-col justify-between"
+                    >
+                        <div>
+                            <img
+                                className="object-center p-5 h-[278px] bg-gray-200 rounded-lg"
+                                src={product.image}
+                                alt={product.name}
+                            />
+                            <h3 className="text-[16px] mt-4 mb-4">
+                                {product.name}
+                            </h3>
+                        </div>
+                        <div>
+                            <span className="bg-[#f4f4f4] p-1 rounded-2xl text-[13px]">
+                                {product.axiom_monthly_price}
+                            </span>
+                            <div className="flex justify-between items-center mt-1">
+                                <p>
+                                    {product.sale_price} <span>so'm</span>
+                                </p>
+                                <Button
+                                    icon={<ShoppingCartOutlined />}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </Link>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+export default ProductList;

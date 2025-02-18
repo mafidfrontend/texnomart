@@ -15,8 +15,6 @@ function Navbar() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { cart } = useStore();
 
-    const totalPrice = cart.reduce((sum, item) => sum + item.sale_price * item.count, 0);
-
     return (
         <>
             <nav>
