@@ -7,10 +7,9 @@ import SiderFilterValue from "./SiderFilterValue";
 
 function ProductList() {
     const { slug } = useParams();
-    const [products, setProducts] = useState(null);
+    const [products, setProducts] = useState();
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const pageSize = 20;
 
     useEffect(() => {
         axios
@@ -19,7 +18,10 @@ function ProductList() {
             )
             .then((res) => {
                 setProducts(res.data.data);
-                const pagination = products.pagination
+                if (!products) {
+                    return <div></div>;
+                }
+                const pagination = products.pagination;
                 setTotalPages(
                     Math.ceil(pagination.total_count / pagination.page_size)
                 );
@@ -30,15 +32,29 @@ function ProductList() {
         return <div>Loading ...</div>;
     }
 
+    if (!totalPages) {
+        return <div>Loading ...</div>;
+    }
+
     return (
         <div>
-            <div className="flex justify-center mt-6">
-                <Pagination
-                    current={currentPage}
-                    total={totalPages}
-                    pageSize={1}
-                    onChange={(page) => setCurrentPage(page)}
-                />
+            <div className="flex justify-center mt-6 space-x-2">
+                {totalPages > 1 &&
+                    Array(totalPages)
+                        .fill()
+                        .map((_, index) => (
+                            <Button
+                                key={index}
+                                type={
+                                    currentPage === index + 1
+                                        ? "primary"
+                                        : "default"
+                                }
+                                onClick={() => setCurrentPage(index + 1)}
+                            >
+                                {index + 1}
+                            </Button>
+                        ))}
             </div>
             <div className="container mx-auto flex flex-col">
                 <div className="flex">

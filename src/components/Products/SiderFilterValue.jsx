@@ -1,4 +1,4 @@
-import { CaretUpOutlined } from "@ant-design/icons";
+import { CaretDownOutlined, CaretUpOutlined } from "@ant-design/icons";
 import { Button, Checkbox } from "antd";
 import React, { useState } from "react";
 
