@@ -10,6 +10,7 @@ import Hero from "./Hero";
 import { Link } from "react-router-dom";
 import useStore from "./store";
 import ModalSavatcha from "./ModalSavatcha";
+import LoginModal from "./LoginModal";
 
 function Navbar() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,10 +27,7 @@ function Navbar() {
                         </Button>
                         <Input className="input" placeholder="Qidirish" />
                         <div className="flex ml-12 gap-10">
-                            <div className="flex flex-col items-center">
-                                <UserOutlined />
-                                <p>Kirish</p>
-                            </div>
+                            <LoginModal />
                             <div className="flex flex-col items-center">
                                 <HeartOutlined />
                                 <p>Sevimlilar</p>
