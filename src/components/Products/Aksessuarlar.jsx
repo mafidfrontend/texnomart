@@ -3,6 +3,7 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Loading from "./Loading";
 
 function Aksessuarlar() {
     const [similarProducts, setSimilarProducts] = useState();
@@ -18,7 +19,7 @@ function Aksessuarlar() {
     }, []);
 
     if(!similarProducts) {
-        return <div>Loading ...</div>
+        return <div className="container mx-auto"><Loading /></div>
     }
 
     const aksesuar = similarProducts.slice(0, 1).map((item) => item.products);

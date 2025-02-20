@@ -3,6 +3,7 @@ import { Button, Checkbox, Collapse } from "antd";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { ShoppingCartOutlined } from "@ant-design/icons";
+import Loading from "./Loading";
 
 function AllProducts() {
     const [products, setProducts] = useState(null);
@@ -21,7 +22,7 @@ function AllProducts() {
     }, []);
 
     if (!products) {
-        return <div>Loading ...</div>;
+        return <div className="container mx-auto"><Loading /></div>;
     }
 
     return (

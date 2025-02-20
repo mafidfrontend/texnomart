@@ -4,6 +4,7 @@ import axios from "axios";
 import { Card, Spin } from "antd";
 import ProductPriceDetails from "./ProductPriceDetails";
 import Aksessuarlar from "./Aksessuarlar";
+import Loading from "./Loading";
 
 function ProductDetail() {
     const { id } = useParams();
@@ -32,15 +33,9 @@ function ProductDetail() {
 
 
     if (loading)
-        return (
-            <div className="text-center mt-20">
-                <Spin size="large" />
-            </div>
-        );
-    if (error)
-        return <div className="text-center mt-20 text-red-500">{error}</div>;
+        return <div className="container mx-auto"><Loading /></div>;
     if (!product)
-        return <div className="text-center mt-20">Mahsulot topilmadi</div>;
+        return <div className="container mx-auto"><Loading /></div>;
 
     return (
         <div className="container mx-auto p-4">

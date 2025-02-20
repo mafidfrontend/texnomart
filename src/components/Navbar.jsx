@@ -3,7 +3,6 @@ import { Button, Input } from "antd";
 import {
     MenuOutlined,
     HeartOutlined,
-    UserOutlined,
     ShoppingCartOutlined,
 } from "@ant-design/icons";
 import Hero from "./Hero";

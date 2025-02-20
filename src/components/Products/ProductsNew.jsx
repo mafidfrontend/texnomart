@@ -3,6 +3,7 @@ import { ArrowRightOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import useStore from "../store";
 import { Link } from "react-router-dom";
+import Loading from "./Loading";
 
 function ProductsNew() {
     const { productsNew, fetchProductsNew, loading } = useStore();
@@ -12,7 +13,7 @@ function ProductsNew() {
         fetchProductsNew();
     }, []);
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div className="container mx-auto"><Loading /></div>;
 
     return (
         <div className="container mx-auto relative">

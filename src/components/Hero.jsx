@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import useMyStore from "./store";
+import Loading from "./Products/Loading";
 
 function Hero() {
     const { productTitle, setProductTitle, loading, setLoading } = useMyStore();
@@ -18,7 +19,7 @@ function Hero() {
     }, []);
 
     if (loading) {
-        return <div>Loading ...</div>;
+        return <div className="container mx-auto"><Loading /></div>
     }
 
     return (

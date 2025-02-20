@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import SiderFilterValue from "./SiderFilterValue";
+import Loading from "./Loading";
 
 function ProductList() {
     const { slug } = useParams();
@@ -19,7 +20,7 @@ function ProductList() {
             .then((res) => {
                 setProducts(res.data.data);
                 if (!products) {
-                    return <div></div>;
+                    return <div className="container mx-auto"><Loading /></div>;
                 }
                 const pagination = products.pagination;
                 setTotalPages(
@@ -28,12 +29,12 @@ function ProductList() {
             });
     }, [slug, currentPage]);
 
-    if (!products) {
-        return <div>Loading ...</div>;
+    if (!products && slug) {
+        return <div className="container mx-auto"><Loading /></div>;
     }
 
     if (!totalPages) {
-        return <div>Loading ...</div>;
+        return <div className="container mx-auto"><Loading /></div>;
     }
 
     return (
